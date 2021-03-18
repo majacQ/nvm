@@ -27,6 +27,9 @@
   - [Setting Custom Colors](#setting-custom-colors)
     - [Persisting custom colors](#persisting-custom-colors)
     - [Suppressing colorized output](#suppressing-colorized-output)
+    - [Restoring PATH](#restoring-path)
+    - [Set default node version](#set-default-node-version)
+    - [Use a mirror of node binaries](#use-a-mirror-of-node-binaries)
   - [.nvmrc](#nvmrc)
   - [Deeper Shell Integration](#deeper-shell-integration)
     - [bash](#bash)
@@ -89,6 +92,15 @@ Eg: `curl ... | NVM_DIR="path/to/nvm"`. Ensure that the `NVM_DIR` does not conta
 #### Troubleshooting on Linux
 
 On Linux, after running the install script, if you get `nvm: command not found` or see no feedback from your terminal after you type `command -v nvm`, simply close your current terminal, open a new terminal, and try verifying again.
+Alternatively, you can run run the following commands for the different shells on the command line:
+
+*bash*: `source ~/.bashrc`
+
+*zsh*: `source ~/.zshrc`
+
+*ksh*: `. ~/.profile`
+
+These should pick up the `nvm` command.
 
 #### Troubleshooting on macOS
 
@@ -98,11 +110,13 @@ If you get `nvm: command not found` after running the install script, one of the
 
   - Since macOS 10.15, the default shell is `zsh` and nvm will look for `.zshrc` to update, none is installed by default. Create one with `touch ~/.zshrc` and run the install script again.
 
-  - If you use bash, the previous default shell, run `touch ~/.bash_profile` to create the necessary profile file if it does not exist.
+  - If you use bash, the previous default shell, your system may not have a `.bash_profile` file where the command is set up. Create one with `touch ~/.bash_profile` and run the install script again. Then, run `source ~/.bash_profile` to pick up the `nvm` command.
+
+  - You have previously used `bash`, but you have `zsh` installed. You need to manually add [these lines](#manual-install) to `~/.zshrc` and run `. ~/.zshrc`.
 
   - You might need to restart your terminal instance or run `. ~/.nvm/nvm.sh`. Restarting your terminal/opening a new tab/window, or running the source command will load the command and the new configuration.
 
-  - You have previously used `bash`, but you have `zsh` installed. You need to manually add [these lines](#manual-install) to `~/.zshrc` and run `. ~/.zshrc`.
+  - If the above didn't help, you might need to restart your terminal instance. Try opening a new tab/window in your terminal and retry.
 
 If the above doesn't fix the problem, you may try the following:
 
@@ -138,10 +152,11 @@ which should output `nvm` if the installation was successful. Please note that `
 
 If you're running a system without prepackaged binary available, which means you're going to install nodejs or io.js from its source code, you need to make sure your system has a C++ compiler. For OS X, Xcode will work, for Debian/Ubuntu based GNU/Linux, the `build-essential` and `libssl-dev` packages work.
 
-**Note:** `nvm` does not support Windows (see [#284](https://github.com/nvm-sh/nvm/issues/284)), but may work in WSL (Windows Subsystem for Linux) depending on the version of WSL. For Windows, two alternatives exist, which are neither supported nor developed by us:
+**Note:** `nvm` does not support Windows (see [#284](https://github.com/nvm-sh/nvm/issues/284)), but may work in WSL (Windows Subsystem for Linux) depending on the version of WSL. For Windows, a few alternatives exist, which are neither supported nor developed by us:
 
   - [nvm-windows](https://github.com/coreybutler/nvm-windows)
   - [nodist](https://github.com/marcelklehr/nodist)
+  - [nvs](https://github.com/jasongin/nvs)
 
 **Note:** `nvm` does not support [Fish] either (see [#303](https://github.com/nvm-sh/nvm/issues/303)). Alternatives exist, which are neither supported nor developed by us:
 
@@ -429,18 +444,21 @@ nvm help --no-colors
 TERM=dumb nvm ls
 ```
 
+#### Restoring PATH
 To restore your PATH, you can deactivate it:
 
 ```sh
 nvm deactivate
 ```
 
+#### Set default node version
 To set a default Node version to be used in any new shell, use the alias 'default':
 
 ```sh
 nvm alias default node
 ```
 
+#### Use a mirror of node binaries
 To use a mirror of the node binaries, set `$NVM_NODEJS_ORG_MIRROR`:
 
 ```sh
