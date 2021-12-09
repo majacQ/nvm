@@ -1,6 +1,6 @@
 #!/bin/sh
 
-die () { echo $@ ; cleanup ; exit 1; }
+die () { echo "$@" ; cleanup ; exit 1; }
 setup() {
   cleanup
   mkdir -p tmp_nvm_find_up/a/b/c/d
@@ -11,7 +11,7 @@ cleanup () {
   rm -rf tmp_nvm_find_up
 }
 
-. ../../../nvm.sh
+\. ../../../nvm.sh
 
 setup
 
@@ -23,4 +23,3 @@ TEST_DIR="$PWD"
 [ "~$(PWD=$TEST_DIR/tmp_nvm_find_up/a/b/c/d nvm_find_up 'test')" = "~$TEST_DIR/tmp_nvm_find_up/a/b/c" ] || die "failed to find 1 level up from current dir"
 
 cleanup
-
